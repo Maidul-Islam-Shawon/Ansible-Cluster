@@ -2,17 +2,17 @@
   become: yes
 
   tasks:
-    - name: create the kube user account
-      user: name=kube append=yes state=present createhome=yes shell=/bin/bash
+    - name: create the maidul user account
+      user: name=maidul append=yes state=present createhome=yes shell=/bin/bash
       password: "{{ 'A@dev2021' | password_hash('sha512', 'mysecretsalt') }}"
 
-    - name: allow 'kube' to use sudo without needing a password
+    - name: allow 'maidul' to use sudo without needing a password
       lineinfile:
         dest: /etc/sudoers
-        line: "kube ALL=(ALL) NOPASSWD: ALL"
+        line: "maidul ALL=(ALL) NOPASSWD: ALL"
         validate: "visudo -cf %s"
 
-    - name: set up authorized keys for the kube user
-      authorized_key: user=kube key="{{item}}"
+    - name: set up authorized keys for the maidul user
+      authorized_key: user=maidul key="{{item}}"
       with_file:
         - ~/.ssh/id_rsa.pub
