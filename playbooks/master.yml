@@ -2,36 +2,36 @@
   become: yes
   tasks:
     - name: initialize the cluster
-      shell: kubeadm init --pod-network-cidr=192.168.97.31/16
+      shell: kubeadm init --pod-network-cidr=192.168.0.0/16
       args:
         chdir: $HOME
         creates: cluster_initialized.txt
 
     - name: create .kube directory
       become: yes
-      become_user: kube
+      become_user: devadmin
       file:
         path: $HOME/.kube
         state: directory
         mode: 0755
 
-    - name: copies admin.conf to user's kube config
+    - name: copies admin.conf to user's home directory
       copy:
         src: /etc/kubernetes/admin.conf
-        dest: /home/kube/.kube/config
+        dest: /home/devadmin/.kube/config
         remote_src: yes
-        owner: kube
+        owner: devadmin
 
     - name: install Pod network
       become: yes
-      become_user: kube
+      become_user: devadmin
       shell: kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
       args:
         chdir: $HOME
 
     - name: Get the token for joining the worker nodes
       become: yes
-      become_user: kube
+      become_user: devadmin
       shell: kubeadm token create  --print-join-command
       register: kubernetes_join_command
 
