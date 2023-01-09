@@ -3,7 +3,7 @@
   remote_user: devadmin
   become: yes
   become_method: sudo
-  become_user: devadmin
+  become_user: root
   gather_facts: yes
   connection: ssh
 
