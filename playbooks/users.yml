@@ -7,9 +7,6 @@
 
     - name: create the maidul user account
       user: name=maidul append=yes state=present createhome=yes shell=/bin/bash
-      vars:
-        mypassword: "A@dev2021"
-      password: "{{ mypassword | password_hash('sha512') }}"
 
     - name: allow 'maidul' to use sudo without needing a password
       lineinfile:
