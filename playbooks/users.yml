@@ -2,6 +2,9 @@
   become: yes
 
   tasks:
+    - name: Login as Root user
+      command: sudo -i
+
     - name: create the maidul user account
       user: name=maidul append=yes state=present createhome=yes shell=/bin/bash
       vars:
