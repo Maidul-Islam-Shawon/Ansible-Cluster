@@ -1,0 +1,6 @@
+[masters]
+master ansible_host=192.168.97.31 ansible_user=devadmin
+
+[workers]
+worker1 ansible_host=192.168.97.32 ansible_user=devadmin
+worker2 ansible_host=192.168.97.33 ansible_user=devadmin

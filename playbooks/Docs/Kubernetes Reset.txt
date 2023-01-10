@@ -1,0 +1,19 @@
+How to remove or cleanup kubernetes worker nodes in Ubuntu?
+
+$ kubeadm reset
+$ sudo apt-get purge kubeadm kubectl kubelet kubernetes-cni kube*   
+$ sudo apt-get autoremove  
+$ sudo rm -rf ~/.kube
+
+
+
+kubeadm reset -f
+rm -rf /etc/cni /etc/kubernetes /var/lib/dockershim /var/lib/etcd /var/lib/kubelet /var/run/kubernetes ~/.kube/*
+iptables -F && iptables -X
+iptables -t nat -F && iptables -t nat -X
+iptables -t raw -F && iptables -t raw -X
+iptables -t mangle -F && iptables -t mangle -X
+systemctl restart docker
+
+
+https://www.devopsschool.com/blog/how-to-delete-remove-clean-existing-corrupted-or-old-kubeadm-kubernetes-clusters-setup/
