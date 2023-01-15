@@ -16,6 +16,9 @@
         sudo sed -i 's/  advertiseAddress: 1.2.3.4/  advertiseAddress: 192.168.97.74/' ClusterConfiguration.yaml
         sudo sed -i 's/  criSocket: \/var\/run\/dockershim\.sock/  criSocket: \/run\/containerd\/containerd\.sock/' ClusterConfiguration.yaml
         sudo sed -i 's/  name: node/  name: amsl-qa-master/' ClusterConfiguration.yaml
+
+    - name: install clusterconfiguration file updated
+      shell: |
         cat <<EOF | cat >>  ClusterConfiguration.yaml
         ---
         apiVersion: kubelet.config.k8s.io/v1beta1
