@@ -27,7 +27,7 @@
     - name: initialize the cluster
       become: yes
       become_user: devadmin
-      shell: sudo kubeadm init --config=ClusterConfiguration.yaml --cri-socket /run/containerd/containerd.sock
+      shell: kubeadm init \ --config=ClusterConfiguration.yaml \ --cri-socket /run/containerd/containerd.sock
       args:
         chdir: $HOME
         creates: cluster_initialized.txt
