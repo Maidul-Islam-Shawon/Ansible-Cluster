@@ -5,7 +5,8 @@
       become: yes
       become_user: devadmin
       shell: |
-        kubeadm config print init-defaults | tee ClusterConfiguration.yaml
+        wget https://docs.projectcalico.org/manifests/calico.yaml
+        sudo kubeadm config print init-defaults | tee ClusterConfiguration.yaml
         sudo sed -i 's/  advertiseAddress: 1.2.3.4/  advertiseAddress: 192.168.97.74/' ClusterConfiguration.yaml
         sudo sed -i 's/  criSocket: \/var\/run\/dockershim\.sock/  criSocket: \/run\/containerd\/containerd\.sock/' ClusterConfiguration.yaml
         sudo sed -i 's/  name: node/  name: amsl-qa-master/' ClusterConfiguration.yaml
