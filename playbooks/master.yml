@@ -25,7 +25,7 @@
         EOF
 
     - name: initialize the cluster
-      shell: kubeadm init \ --config=ClusterConfiguration.yaml \ --cri-socket /run/containerd/containerd.sock
+      shell: kubeadm init --config=ClusterConfiguration.yaml --cri-socket /run/containerd/containerd.sock
       args:
         chdir: $HOME
         creates: cluster_initialized.txt
