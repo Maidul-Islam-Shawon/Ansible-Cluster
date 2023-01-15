@@ -34,8 +34,8 @@
       blockinfile:
         path: "/etc/sysctl.d/99-kubernetes-cri.conf"
         block: |
-          net.bridge.bridge-nf-call-iptables = 1
-          net.ipv4.ip_forward = 1
+          net.bridge.bridge-nf-call-iptables  = 1
+          net.ipv4.ip_forward                 = 1
           net.bridge.bridge-nf-call-ip6tables = 1
 
     - name: Apply new settings
@@ -46,6 +46,7 @@
         sudo apt-get update && sudo apt-get install -y containerd
         sudo mkdir -p /etc/containerd
         sudo containerd config default | sudo tee /etc/containerd/config.toml
+        sudo sed -i 's/ SystemdCgroup = false/ SystemdCgroup = true/g' /etc/containerd/config.toml
         sudo systemctl restart containerd
 
     - name: disable swap
@@ -73,4 +74,9 @@
       shell: |
         sudo apt-get update
         sudo apt-get install -y kubelet=1.21.0-00 kubeadm=1.21.0-00 kubectl=1.21.0-00
-        sudo apt-mark hold kubelet kubeadm kubectl
+        sudo apt-mark hold kubelet kubeadm kubectl containerd
+
+    - name: enable kubelet and containerd
+      shell: |
+        sudo systemctl enable kubelet.service
+        sudo systemctl enable containerd.service
